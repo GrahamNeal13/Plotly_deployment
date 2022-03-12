@@ -58,7 +58,7 @@ function buildCharts(sample) {
   // 2. Use d3.json to load and retrieve the samples.json file 
   d3.json("samples.json").then((data) => {
     // 3. Create a variable that holds the samples array. 
-    var sampleArray = data.sample;
+    var sampleArray = data.samples;
     // 4. Create a variable that filters the samples for the object with the desired sample number.
     var sampleNumber = sampleArray.filter(sampleObj => sampleObj.id == sample);
     //  5. Create a variable that holds the first sample in the array.
@@ -76,32 +76,28 @@ function buildCharts(sample) {
     var yticks = sampleIds.map(sampleObj => "OTU " + sampleObj).slice(0,10).reverse();
 
     // 8. Create the trace for the bar chart. 
-    var barData = {
+    var barData = [{
       x: sampleValues,
       y: yticks,
       type: "bar", orientation: "h",
       text: sampleLabels
-    };
-      
+    }];
+
     // 9. Create the layout for the bar chart. 
     var barLayout = {
       title: "Top 10 Bacteria Cultures Found",
-      showticklabels: true
+      //showticklabels: true
      
     };
     // 10. Use Plotly to plot the data with the layout. 
-    Plotly.newPlot("#bar", barData, barLayout);
-  });
-}
-
-
+    Plotly.newPlot("bar", barData, barLayout);
+  //});
+//}
 // Bar and Bubble charts
 // Create the buildCharts function.
-function buildCharts(sample) {
+//function buildCharts(sample) {
   // Use d3.json to load and retrieve the samples.json file 
-  d3.json("samples.json").then((data) => {
-    
-
+  //d3.json("samples.json").then((data) => {
     // Deliverable 1 Step 10. Use Plotly to plot the data with the layout. 
     Plotly.newPlot("bar", barData, barLayout); 
 
@@ -123,30 +119,28 @@ function buildCharts(sample) {
       title: "Bacteria Cultures Per Sample",
       xaxis: {title: "OTU ID"}, 
       hovermode: 'closest',
-      hoverlabel: sampleLabels
+      hoverlabel: sampleLabels,
+      
     };
 
     // 3. Use Plotly to plot the data with the layout.
     Plotly.newPlot("bubble", bubbleData, bubbleLayout); 
-  });
-}
-
-
+  //});
+//}
 // Create the buildChart function.
-function buildCharts(sample) {
+//function buildCharts(sample) {
   // Use d3.json to load the samples.json file 
-  d3.json("samples.json").then((data) => {
+  //d3.json("samples.json").then((data) => {
     console.log(data);
 
     // 1. Create a variable that filters the metadata array for the object with the desired sample number.
-    var metadata = data.metaData;
-
+    var metadata = data.metadata;
     // 2. Create a variable that holds the first sample in the metadata array.
     var gauge = metadata.filter(metaObj => metaObj.id == sample);
-    var metaData1 = metadata[0];
+    var metaData1 = gauge[0];
     // 3. Create a variable that holds the washing frequency.
     var washFreq = metaData1.wfreq;
-    
+
     // 4. Create the trace for the gauge chart.
     var gaugeData = [{
       value: washFreq,
@@ -171,7 +165,7 @@ function buildCharts(sample) {
     var gaugeLayout = { 
       width: 600,
       height: 500,
-      margin: {t: 0, b: 0}
+      automargin: true
     };
 
     // 6. Use Plotly to plot the gauge data and layout.
